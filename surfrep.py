@@ -5,32 +5,33 @@ import getpass
 import smtplib
 import schedule
 import time
-import urllib2
+import urllib.request
 
 # MUST FILL IN YOURSELF
 APIKEY = ""
 SENDER = "surfreportlukewood@gmail.com"
 
+#loads all of the emails to send to from users.txt
 def loadusers():
 	users = []
 	with open("users.txt") as f:
 		for line in f:
 			users.append(line)
 	return users
-	
+#loads the location codes and name of the beach
 def loadspots():
 	spots = []
 	with open("spots.txt") as f:
 		for line in f:
 			spots.append(line).split(" ",1)
 	return spots
-
-def getwavedata(url)
-	data = urllib2.urlopen(url)
+#downloads the json data
+def getwavedata(url):
+	data = urllib.urlopen(url)
 	data = data.read()
 	data = 	json.loads(data)
 	return data
-
+#sends a message using these parameters through the gmail server
 def sendmessage(user, pwd, recipient, subject, body):
 	FROM = user
 	TO = recipient if type(recipient) is list else [recipient]
@@ -47,17 +48,22 @@ def sendmessage(user, pwd, recipient, subject, body):
 		print("System Networking Error, Exiting, Press Enter.")
 		g = input()
 
+#this is what will run daily at 8 am
 def loop(user, pwd):
 	spots = loadspots()
 	users = loadusers()
 	swells = []
-
 	for spot in spots:
-		swelldata = getwavedata("http://magicseaweed.com/api/%s/forecast/?spot_id=%s&fields=swell&units=us" % (APIKEY,spot[0]))
-		temp = spot[1]+" "+swelldata["swell"]["minBreakingHeight"]+"-"+swelldata["swell"]["maxBreakingHeight"]+" ft"
+		swelldata = getwavedata("http://magicseaweed.com/api/%s/forecast/?spot_id=%s&fields=swell&units=us" % (APIKEY,spot[0]))["swell"]
+		temp = spot[1]+" "+swelldata["minBreakingHeight"]+"-"+swelldata["maxBreakingHeight"]+" ft"
 		swells.append(temp)
-	sendmessage(user,pwd,users,"SD Surf","\n".join(swells)
-	
+	sendmessage(user,pwd,users,"SD Surf","\n".join(swells))
+
+#main function
+
 def main():
 	password = getpass.getpass()
-	scheduler.every().day.at("08:00").do(loop,SENDER,password)
+	schedule.every().day.at("08:00").do(loop,SENDER,password)
+
+if __name__ == "__main__":
+	main()
