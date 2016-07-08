@@ -23,12 +23,12 @@ def loadspots():
 	spots = []
 	with open("spots.txt") as f:
 		for line in f:
-			spots.append(line).split(" ",1)
+			spots.append(line.split(" ",1))
 	return spots
 #downloads the json data
 def getwavedata(url):
-	data = urllib.urlopen(url)
-	data = data.read()
+	data = urllib.request.urlopen(url)
+	data = data.read().decode('utf-8')
 	data = 	json.loads(data)
 	return data
 #sends a message using these parameters through the gmail server
@@ -54,16 +54,18 @@ def loop(user, pwd):
 	users = loadusers()
 	swells = []
 	for spot in spots:
-		swelldata = getwavedata("http://magicseaweed.com/api/%s/forecast/?spot_id=%s&fields=swell&units=us" % (APIKEY,spot[0]))["swell"]
-		temp = spot[1]+" "+swelldata["minBreakingHeight"]+"-"+swelldata["maxBreakingHeight"]+" ft"
-		swells.append(temp)
-	sendmessage(user,pwd,users,"SD Surf","\n".join(swells))
+		print(spot)
+		swelldata = getwavedata("http://magicseaweed.com/api/%s/forecast/?spot_id=%s&fields=swell.*&units=us" % (APIKEY,spot[0]))
+		for a in swelldata:
+			print(a["swell"]["minBreakingHeight"])
+		#temp = spot[1]+" "+swelldata["minBreakingHeight"]+"-"+swelldata["maxBreakingHeight"]+" ft"
+	#	swells.append(temp)
+	#sendmessage(user,pwd,users,"SD Surf","\n".join(swells))
 
 #main function
 
 def main():
 	password = getpass.getpass()
-	schedule.every().day.at("08:00").do(loop,SENDER,password)
-
+	loop(SENDER,password)
 if __name__ == "__main__":
 	main()
