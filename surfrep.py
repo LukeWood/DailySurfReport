@@ -14,14 +14,14 @@ SENDER = "surfreportlukewood@gmail.com"
 #loads all of the emails to send to from users.txt
 def loadusers():
 	users = []
-	with open("users.txt") as f:
+	with open("rsc/users.txt") as f:
 		for line in f:
 			users.append(line)
 	return users
 #loads the location codes and name of the beach
 def loadspots():
 	spots = []
-	with open("spots.txt") as f:
+	with open("rsc/spots.txt") as f:
 		for line in f:
 			spots.append(line.split(" ",1))
 	return spots
