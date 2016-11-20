@@ -22,7 +22,7 @@ Simply add this postpended to your phone number to users.txt.
 Now lets fill spots.txt.  Follow this format:
 <Magic Seaweed beach id> <Beach name you want in text>
 
-Example for Del Mar (my favorite beach):
+Example for Del Mar (my favorite beach):</br>
 3707 Del Mar
 
 WARNING: malformatting these files will cause the script to crash.  If you can't figure out why it's crashing it could be a newline at the end of the file.  Try to avoid these.
