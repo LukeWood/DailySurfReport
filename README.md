@@ -8,11 +8,13 @@ To use this script, you must have a Magic Seaweed API key.
 [You can request one here](http://magicseaweed.com/developer/api)
 
 Once you have one, create a config.json file and store the following:
+```json
 {
   "msw":"{YOUR API KEY}",
   "sender":"{You gmail account}",
   "password":"{Your password}"
 }
+```
 ###Step 2: Populate "spots.txt" and "users.txt"
 Next, we need to fill up the users.txt file.  This is pretty easy to do.  First we need to find out your providers email to text portal.  For me it's Verizon which uses <yournumber>@vtext.com
 Simply add this to users.txt
