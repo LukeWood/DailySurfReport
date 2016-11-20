@@ -20,7 +20,7 @@ Next, we need to fill up the users.txt file.  This is pretty easy to do.  First 
 Simply add this postpended to your phone number to users.txt.
 
 Now lets fill spots.txt.  Follow this format:
-<Magic Seaweed beach id> <Beach name you want in text>
+{Magic Seaweed beach id} {Beach name you want in text}
 
 Example for Del Mar (my favorite beach):</br>
 3707 Del Mar
