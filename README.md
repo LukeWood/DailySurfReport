@@ -16,8 +16,8 @@ Once you have one, create a config.json file and store the following:
 }
 ```
 ###Step 2: Populate "spots.txt" and "users.txt"
-Next, we need to fill up the users.txt file.  This is pretty easy to do.  First we need to find out your providers email to text portal.  For me it's Verizon which uses <yournumber>@vtext.com
-Simply add this to users.txt
+Next, we need to fill up the users.txt file.  This is pretty easy to do.  First we need to find out your providers email to text portal.  For me it's Verizon which uses <yournumber>@vtext.com.
+Simply add this postpended to your phone number to users.txt.
 
 Now lets fill spots.txt.  Follow this format:
 <Magic Seaweed beach id> <Beach name you want in text>
