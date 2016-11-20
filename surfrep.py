@@ -3,13 +3,23 @@
 import json
 import getpass
 import smtplib
-import schedule
 import time
 import urllib.request
+import sys
 
-# MUST FILL IN YOURSELF
-APIKEY = ""
-SENDER = "surfreportlukewood@gmail.com"
+CONFIG = None
+try:
+	with open("config.json") as f:
+		CONFIG = json.load(f)
+except:
+	CONFIG = None
+
+if(CONFIG == None):
+	sys.exit("config.json does not exist.")
+
+SENDER = CONFIG["sender"]
+PASSWORD = CONFIG["password"]
+APIKEY = CONFIG["msw"]
 
 #loads all of the emails to send to from users.txt
 def loadusers():
@@ -58,14 +68,14 @@ def loop(user, pwd):
 		swelldata = getwavedata("http://magicseaweed.com/api/%s/forecast/?spot_id=%s&fields=swell.*&units=us" % (APIKEY,spot[0]))
 		for a in swelldata:
 			print(a["swell"]["minBreakingHeight"])
-		#temp = spot[1]+" "+swelldata["minBreakingHeight"]+"-"+swelldata["maxBreakingHeight"]+" ft"
-	#	swells.append(temp)
-	#sendmessage(user,pwd,users,"SD Surf","\n".join(swells))
+
+		temp = spot[1]+" "+swelldata["minBreakingHeight"]+"-"+swelldata["maxBreakingHeight"]+" ft"
+		swells.append(temp)
+	sendmessage(user,pwd,users,"SD Surf","\n".join(swells))
 
 #main function
 
 def main():
-	password = getpass.getpass()
-	loop(SENDER,password)
+	loop(SENDER,PASSWORD)
 if __name__ == "__main__":
 	main()
